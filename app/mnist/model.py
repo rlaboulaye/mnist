@@ -38,4 +38,5 @@ def convolutional(x, keep_prob):
     W_fc2 = weight_variable([1024, 10])
     b_fc2 = bias_variable([10])
     y = tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
+#    return h_conv1, h_pool1, h_conv2, h_pool2, y, [W_conv1, b_conv1, W_conv2, b_conv2, W_fc1, b_fc1, W_fc2, b_fc2]
     return y, [W_conv1, b_conv1, W_conv2, b_conv2, W_fc1, b_fc1, W_fc2, b_fc2]
