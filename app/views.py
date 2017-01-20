@@ -3,6 +3,9 @@ from flask import request, render_template, jsonify
 from PIL import Image
 import numpy as np
 import tensorflow as tf
+from skimage import io as skio
+from skimage.color import rgb2gray
+from skimage.transform import resize
 
 import os
 import sys
@@ -23,16 +26,6 @@ saver.restore(sess, stored_model_location)
 #Runs input through convolutional model
 def convolutional(input):
     return sess.run(y2, feed_dict={x: input, keep_prob: 1.0}).flatten().tolist()
-
-# This code shows that the model is properly loaded
-#
-#from tensorflow.examples.tutorials.mnist import input_data
-#mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
-#print("Target")
-#print(mnist.test.labels[0])
-#print("Predicted")
-#print(convolutional([mnist.test.images[0]]))
-#
 
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'bmp'])
 
@@ -61,6 +54,6 @@ def process_photo():
 
 @app.route('/api/mnist', methods=['POST'])
 def mnist():
-    input = ((255 - np.array(request.json, dtype=np.uint8)) / 255.0).reshape(1, 784)
+    input = resize(rgb2gray(np.invert(skio.imread(request.files['image']))),(28,28)).reshape(1,784)
     output = convolutional(input)
-    return jsonify(results=[output])
+    return jsonify(results=output)
