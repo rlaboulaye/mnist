@@ -18,8 +18,8 @@ sess = tf.Session()
 
 with tf.variable_scope("convolutional"):
     keep_prob = tf.placeholder("float")
-#    h_conv1, h_pool1, h_conv2, h_pool2, y2, variables = model.convolutional(x, keep_prob)
-    y2, variables = model.convolutional(x, keep_prob)
+    h_conv1, h_pool1, h_conv2, h_pool2, y2, variables = model.convolutional(x, keep_prob)
+#    y2, variables = model.convolutional(x, keep_prob)
 saver = tf.train.Saver(variables)
 stored_model_location = os.path.dirname(__file__) + '/mnist/convolutional.ckpt'
 saver.restore(sess, stored_model_location)

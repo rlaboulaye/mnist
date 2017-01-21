@@ -9,7 +9,7 @@ data = input_data.read_data_sets('MNIST_data', one_hot=True)
 with tf.variable_scope("convolutional"):
     x = tf.placeholder(tf.float32, [None, 784])
     keep_prob = tf.placeholder(tf.float32)
-    y, variables = model.convolutional(x, keep_prob)
+    h_conv1, h_pool1, h_conv2, h_pool2, y, variables = model.convolutional(x, keep_prob)
 
 # train
 y_ = tf.placeholder(tf.float32, [None, 10])
